@@ -15,11 +15,11 @@ read_breathid(filename = NULL, text = NULL)
 Structure of class \code{\link{breathtest_data}}
 }
 \description{
-Reads 13c data from a BreathID file, and returns a stucture for
+Reads 13c data from a BreathID file, and returns a structure 
 of class \code{breathtest_data}.
 }
 \examples{
-filename = system.file("extdata", "350_20043_0_GER.txt", package = "breathtestcore")
+filename = btcore_file("350_20043_0_GER.txt")
 # Show first lines
 cat(readLines(filename, n = 10), sep="\\n")
 #

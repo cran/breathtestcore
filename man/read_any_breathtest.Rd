@@ -2,7 +2,7 @@
 % Please edit documentation in R/read_any_breathtest.R
 \name{read_any_breathtest}
 \alias{read_any_breathtest}
-\title{Read any external files with breathtest data}
+\title{Read breathtest files of any format}
 \usage{
 read_any_breathtest(files)
 }
@@ -22,9 +22,10 @@ and reads it if it has a valid format.
 }
 \examples{
 files = c(
-  system.file("extdata", "IrisCSV.TXT", package = "breathtestcore"),
-  system.file("extdata", "350_20043_0_GER.txt", package = "breathtestcore"),
-  system.file("extdata", "IrisMulti.TXT", package = "breathtestcore")
+  group_a = btcore_file("IrisCSV.TXT"),
+  group_a = btcore_file("350_20043_0_GER.txt"),
+  group_b = btcore_file("IrisMulti.TXT"),
+  group_b = btcore_file("NewBreathID_01.xml")  
  )
  bt = read_any_breathtest(files)
  str(bt, 1)

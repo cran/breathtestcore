@@ -4,7 +4,7 @@
 \alias{cleanup_data}
 \title{Transforms 13C breath data into a clean format for fitting}
 \usage{
-cleanup_data(data)
+cleanup_data(data, ...)
 }
 \arguments{
 \item{data}{\itemize{
@@ -19,6 +19,14 @@ cleanup_data(data)
    are not named, group name \code{A} is used for all items.}
  \item{A structure of class \code{\link{breathtest_data}}, as imported from
    a file with \code{\link{read_any_breathtest}}}
+ \item{A list of class \code{breathtest_data_list} as generated
+ from read function such as \code{\link{read_breathid_xml}}}
+}}
+
+\item{...}{optional. 
+\describe{
+  \item{use_filename_as_patient_id}{Always use filename instead of 
+  patient name. Use this when patient id are not unique.}
 }}
 }
 \value{
@@ -61,6 +69,11 @@ data1
 # Four columns with data at t = 0.01
 cleanup_data(data1)
 
+# Results from simulate_breathtest_data can be passed directly to cleanup_data
+cleanup_data(simulate_breathtest_data(3))
+# .. which implicitly does
+cleanup_data(simulate_breathtest_data(3)$data)
+
 # Use simulated data
 data2 = list(
   Z = simulate_breathtest_data(seed = 10)$data,
@@ -72,9 +85,9 @@ unique(d$group)
 # "Z" "Y"
 
 # Mix multiple input formats
-f1 = system.file("extdata", "350_20043_0_GER.txt", package = "breathtestcore")
-f2 = system.file("extdata", "IrisMulti.TXT", package = "breathtestcore")
-f3 = system.file("extdata", "IrisCSV.TXT", package = "breathtestcore")
+f1 = btcore_file("350_20043_0_GER.txt")
+f2 = btcore_file("IrisMulti.TXT")
+f3 = btcore_file("IrisCSV.TXT")
 # With a named list, the name is used as a group parameter
 data = list(A = read_breathid(f1), B = read_iris(f2), C = read_iris_csv(f3)) 
 d = cleanup_data(data)

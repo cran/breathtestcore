@@ -64,6 +64,8 @@ nlme_fit = function(data, dose = 100,
                    start = list(m = 30, k = 1 / 100, beta = 2),
                    sample_minutes = 15) {
 
+  # Check if data have been validated by cleanup_data
+  assert_that(are_equal(names(data), c("patient_id", "group", "minute", "pdr")))
   # Avoid notes on CRAN
   group =  value = patient_id = pat_group = . = NULL
   
@@ -126,12 +128,12 @@ nlme_fit = function(data, dose = 100,
 
   methods = c(
     "exp_beta","exp_beta","exp_beta","bluck_coward","maes_ghoos",
-    "maes_ghoos_scint", "bluck_coward","maes_ghoos"
+    "maes_ghoos_scintigraphy", "bluck_coward","maes_ghoos"
   )
   parameters = c("m", "k", "beta", "t50", "t50", "t50", "tlag", "tlag")
   # TODO: replace the for-loop by purring (for elegance, speed is secondars)
   pars = list()
-  for (i in 1:nrow(cf))  {
+  for (i in seq_len(nrow(cf)))  {
     cf1 = cf[i, , drop = FALSE]
     pars[[i]] = data_frame(
       patient_id = cf1$patient_id,
@@ -157,9 +159,8 @@ nlme_fit = function(data, dose = 100,
     filter(value != 0) %>%
     tibble::as_tibble(cf)
   attr(cf, "AIC") = AIC(bc_nlme)
-  
   data = data %>% select(-pat_group) # only used locally
-  ret = list(coef = cf, data = data)
+  ret = list(coef = cf, data = data, nlme_fit = bc_nlme)
   class(ret) = c("breathtestnlmefit", "breathtestfit")
   ret
 }

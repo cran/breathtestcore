@@ -1,13 +1,13 @@
 #' @title Read BreathID file
 #'
-#' @description Reads 13c data from a BreathID file, and returns a stucture for
+#' @description Reads 13c data from a BreathID file, and returns a structure 
 #' of class \code{breathtest_data}. 
 #'
 #' @param filename name of txt-file to be read
 #' @param text alternatively, text can be given as string
 #' @return Structure of class \code{\link{breathtest_data}}
 #' @examples
-#' filename = system.file("extdata", "350_20043_0_GER.txt", package = "breathtestcore")
+#' filename = btcore_file("350_20043_0_GER.txt")
 #' # Show first lines
 #' cat(readLines(filename, n = 10), sep="\n")
 #' #

@@ -18,7 +18,15 @@
 #'    are not named, group name \code{A} is used for all items.}
 #'  \item{A structure of class \code{\link{breathtest_data}}, as imported from
 #'    a file with \code{\link{read_any_breathtest}}}
+#'  \item{A list of class \code{breathtest_data_list} as generated
+#'  from read function such as \code{\link{read_breathid_xml}}}
 #' }
+#' @param ... optional. 
+#' \describe{
+#'   \item{use_filename_as_patient_id}{Always use filename instead of 
+#'   patient name. Use this when patient id are not unique.}
+#' }
+#' 
 #'
 #' @return A tibble with 4 columns. Column \code{patient_id} is created with a dummy
 #' entry of \code{pat_a} if no patient_id was present in the input data set. 
@@ -51,6 +59,11 @@
 #' # Four columns with data at t = 0.01
 #' cleanup_data(data1)
 #' 
+#' # Results from simulate_breathtest_data can be passed directly to cleanup_data
+#' cleanup_data(simulate_breathtest_data(3))
+#' # .. which implicitly does
+#' cleanup_data(simulate_breathtest_data(3)$data)
+#' 
 #' # Use simulated data
 #' data2 = list(
 #'   Z = simulate_breathtest_data(seed = 10)$data,
@@ -62,9 +75,9 @@
 #' # "Z" "Y"
 #' 
 #' # Mix multiple input formats
-#' f1 = system.file("extdata", "350_20043_0_GER.txt", package = "breathtestcore")
-#' f2 = system.file("extdata", "IrisMulti.TXT", package = "breathtestcore")
-#' f3 = system.file("extdata", "IrisCSV.TXT", package = "breathtestcore")
+#' f1 = btcore_file("350_20043_0_GER.txt")
+#' f2 = btcore_file("IrisMulti.TXT")
+#' f3 = btcore_file("IrisCSV.TXT")
 #' # With a named list, the name is used as a group parameter
 #' data = list(A = read_breathid(f1), B = read_iris(f2), C = read_iris_csv(f3)) 
 #' d = cleanup_data(data)
@@ -74,19 +87,21 @@
 #' # File name is used a patient name if none is available
 #' unique(d$group)
 #' # "A" "B" "C"
-
+#' @importFrom purrr map_lgl
 #' @export 
-cleanup_data = function(data) {
+cleanup_data = function(data, ...) {
   UseMethod("cleanup_data")
 } 
 
 #' @export 
-cleanup_data.data.frame = function(data){
+cleanup_data.data.frame = function(data, ... ){
   nc = ncol(data)
   # Keep CRAN quiet
   group = pdr = patient_id = minute = NULL 
   assert_that(nc >= 2)
-  # When there are only two column, assume they are minute and time
+  # Remove duplicates, for example from uploading the same record twice
+  data = dplyr::distinct(data)
+  # When there are only two columns, assume they are minute and time
   # implying that it is only one record
   if (nc == 2) {
     names(data) = c("minute", "pdr")
@@ -111,7 +126,7 @@ cleanup_data.data.frame = function(data){
     if (!all(names(data) == c("patient_id", "group", "minute", "pdr"))) 
       stop("Four columns must be named patient_id, group, minute, pdr")
     if (max(table(data$minute, data$patient_id, data$group)) > 1)
-        stop("Multiple data for one patient, minute and group. Included the same patient's data twice?")
+        warning("Multiple data for one patient, minute and group. Included the same patient's data twice?")
     data$group = as.character(data$group)  
   }
   # Remove negative values, shift values at 0 slightly.
@@ -131,7 +146,9 @@ cleanup_data.data.frame = function(data){
   }
   # We do not use factors for easier combination of records
   data$patient_id = as.character(data$patient_id)  
-  
+  # REmove spaces
+  data$patient_id = str_replace_all(str_trim(data$patient_id), " ", "_")
+
   # Add a dummy  group if there is none
   has_group = "group" %in% names(data)
   if (!has_group) {
@@ -139,8 +156,10 @@ cleanup_data.data.frame = function(data){
     if (!all(with(data, table(patient_id, minute)) %in% 0:1))
       stop("Multiple values for the same patient at the same minute require a <<group>> column")
     data$group = "A"
+  } else {
+    data$group = str_replace_all(str_trim(data$group), " ", "_")
   }
-  # Put things in a nice order
+  # Put columns in standard order
   data = data %>% 
     select(patient_id, group, minute, pdr)
   if (!is.null(comment))
@@ -149,43 +168,78 @@ cleanup_data.data.frame = function(data){
 }
 
 #' @export 
-cleanup_data.matrix = function(data){
+cleanup_data.matrix = function(data, ... ){
   if (ncol(data) > 2)
     stop("A matrix can only be used as data input when two columns <minute> and <pdr> are passed. Use a data frame otherwise")
-  cleanup_data(as_data_frame(data))
+  cleanup_data(as_data_frame(data), ...)
 }
 
 #' @export 
-cleanup_data.list = function(data){
+cleanup_data.breathtest_data_list = function(data, ... ){
+  cleanup_data.list(data, ...)
+}  
+
+#' @export 
+cleanup_data.list = function(data, ... ){
   if (is.null(data)) return(NULL)
-  has_names = !is.null(names(data))
   ret = data.frame()
   comment = list()
-  for (igroup in 1:length(data))  {
-    dd = cleanup_data(data[[igroup]])
+  for (igroup in seq_along(data))  {
+    d1 = data[[igroup]]
+    if (is(d1,"simulated_breathtest_data"))
+      d1 = d1$data
+      
+    is_breathtest_data = inherits(d1, "breathtest_data")
+    ### This is UGLY code! Should use S3 methods
+    needs_group = 
+      !("group" %in% names(d1)) && 
+      ("patient_id" %in% names(d1))
+    
+    group = names(data)[igroup]
+    if (is.null(group))    group = LETTERS[igroup]
+    
+    if (needs_group && !is_breathtest_data) {
+      d1$group = group
+      d1 = d1[c("patient_id", "group", "minute", "pdr")]
+    }
+    dd = cleanup_data(d1, ...)
+    if (is_breathtest_data) {
+      if (dot_lgl("use_filename_as_patient_id", ...))
+        dd$patient_id = str_sub(d1["file_name"], 1, -5)
+      dd$group = group
+    }
     comment[[igroup]] = comment(dd)
-    if (has_names) {
-      dd$group = names(data)[igroup]
-    } else
-      dd$group = "A" # default dummy name
     ret = rbind(ret, dd )
   }
  if (max(table(ret$minute, ret$patient_id, ret$group)) > 1)
-    stop("Multiple data for one patient, minute and group. Included the same patient's data twice?")
+    warning("Multiple data for one patient, minute and group. Included the same patient's data twice?")
   ret = tibble::as_tibble(ret[,c("patient_id", "group", "minute", "pdr")])
   comment = unique(comment)
-  comment[sapply(comment, is.null)] = NULL
+  comment[map_lgl(comment, is.null)] = NULL
   if (length(comment) > 0)
-    comment(ret) = paste(comment, collapse= "\n")
+    comment(ret) = paste(comment, collapse = "\n")
   ret
 }
   
 #' @export 
-cleanup_data.breathtest_data = function(data){
+cleanup_data.breathtest_data = function(data, ... ){
   id = data$patient_id
-  if (is.null(id) || id == "0" | id == "" )
+  if (is.null(id) || 
+      id == "0" || 
+      id == "" || 
+      dot_lgl("use_filename_as_patient_id", ...))
     id = str_sub(data["file_name"], 1, -5) 
   d = cbind(patient_id = id, data$data[,c("minute", "pdr")])
-  cleanup_data(d)    
+  cleanup_data(d, ...)    
 }
 
+#' @export 
+cleanup_data.simulated_breathtest_data = function(data, ... ){
+  # Data come from simulate_breathtest_data()
+  cleanup_data(data$data, ...)
+}
+
+# internal function
+dot_lgl = function(label, ...){
+  !(is.null(list(...)[[label]]))  # && list(...)[[label]]
+}

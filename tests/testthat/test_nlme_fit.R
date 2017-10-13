@@ -1,6 +1,6 @@
 context("Population fit with nlme")
 
-test_that("Data that cannot be fitted with nls_list also fail with nlme", {
+test_that("Some data that cannot be fitted with nls_list also fail with nlme", {
   # with this seed, cf[10] does not fit with nls_list
   data = cleanup_data(simulate_breathtest_data(seed = 100)$data)
   fit = nlme_fit(data)
@@ -15,17 +15,27 @@ test_that("One-group nlme fit returns valid result", {
        "norm_001", "norm_002", "norm_003", "norm_004", "norm_005", "norm_006"),
             group != "liquid_normal") %>%
     cleanup_data()
+  comment(data) = "comment"
   fit = nlme_fit(data)
   expect_is(fit, "breathtestfit")
   expect_is(fit, "breathtestnlmefit")
-  expect_identical(names(fit), c("coef", "data"))
+  expect_equal(comment(fit$data), "comment")
+  expect_identical(names(fit), c("coef", "data", "nlme_fit"))
   cf = coef(fit)
+  expect_equal(comment(cf), "comment")
   expect_equal(nrow(cf), 96)
   expect_identical(names(cf), c("patient_id", "group", "parameter", "method", "value"))
   expect_is(AIC(fit), "numeric" )
+  expect_is(sigma(fit), "numeric" )
+  expect_gt(sigma(fit), 0.5)
   # Check if subsampling done
   expect_equal(nrow(fit$data), 197)  
   expect_identical(names(fit$data), c("patient_id", "group", "minute", "pdr"))
+  # Check summary
+  s = summary(fit)
+  expect_equal(comment(s), "comment")
+  expect_identical(nrow(s), 12L)
+  expect_identical(names(s),  c("patient_id", "group", "value"))
 })
 
 test_that("Two-group nlme fit returns valid result", {
@@ -35,14 +45,31 @@ test_that("Two-group nlme fit returns valid result", {
           c("norm_001", "norm_002", "norm_003", "norm_004", "norm_005", "norm_006")) %>%
     cleanup_data()
   fit = nlme_fit(data)
-  expect_identical(names(fit), c("coef", "data"))
+  expect_identical(names(fit), c("coef", "data", "nlme_fit"))
   cf = coef(fit)
   expect_equal(nrow(cf), 96)
   expect_identical(names(cf), c("patient_id", "group", "parameter", "method", "value"))
   expect_is(AIC(fit), "numeric" )
-
+  expect_gt(sigma(fit), 0)
+  expect_equal(unique(cf$group), c("liquid_normal", "solid_normal"))
+  
   # Check if subsampling done
   expect_equal(nrow(fit$data), 168) # denser sampling early  
   expect_identical(names(fit$data), c("patient_id", "group", "minute", "pdr"))
 })
 
+
+test_that("Three-group nlme fit returns valid result", {
+  data("usz_13c")
+  data = usz_13c %>%
+    dplyr::filter( patient_id %in%
+     c("norm_001", "norm_002", "norm_003", "pat_001", "pat_003", "pat_016")) %>%
+    breathtestcore::cleanup_data()
+  fit_nlme = breathtestcore::nlme_fit(data)
+  expect_identical(names(fit_nlme), c("coef", "data", "nlme_fit"))
+  
+  cf = coef(fit_nlme)
+  expect_equal(nrow(cf), 72)
+  expect_gt(sigma(fit_nlme), 0)
+  expect_equal(unique(cf$group), c("liquid_normal", "solid_normal", "patient"))
+})  

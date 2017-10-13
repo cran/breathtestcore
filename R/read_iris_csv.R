@@ -14,11 +14,12 @@
 #' patient name, patient first name, test, identifikation},
 #' and data frame \code{data} with \code{time} and \code{dob}
 #' @examples
-#' filename = system.file("extdata", "IrisCSV.TXT", package = "breathtestcore")
+#' filename = btcore_file("IrisCSV.TXT")
 #' cat(readLines(filename, n = 3), sep="\n")
 #' #
 #' iris_data = read_iris_csv(filename)
 #' str(iris_data)
+#' @importFrom purrr map
 #' @export 
 read_iris_csv = function(filename = NULL, text = NULL) {
   if (is.null(text)) {
@@ -42,9 +43,10 @@ read_iris_csv = function(filename = NULL, text = NULL) {
   readr::stop_for_problems(text)
 
   if (ncol(d) != 13)  
-    stop(paste("IRIS CSV format", filename, "has unexpected columns. Should be 13"))
+    stop(paste("File in IRIS CSV format", filename, 
+        "has unexpected", ncol(d),"columns; expected 13 columns"))
   if (nrow(d) < 5) 
-    stop(paste("IRIS CSV format", filename, "has only", nrow(d), "rows"))
+    stop(paste("File in IRIS CSV format", filename, "has only", nrow(d), "rows"))
 
   record_date = strptime(d$Datum[1],"%d.%m.%Y")
   patient_id = extract_id(d$Identifikation[1])
@@ -60,8 +62,8 @@ read_iris_csv = function(filename = NULL, text = NULL) {
   names(data) = c("time","dob")
   # remove too small values
   data = data[data$dob >= -10,]
-  if (any(sapply(data, is.na))) 
-    stop("Invalid PDR/DOB data in ", filename)
+  if (any(unlist(map(data, is.na)))) 
+    stop("Invalid or missing PDR/DOB data in\n ", filename)
   breathtest_data(
     file_name = basename(filename),
     patient_id = patient_id,
@@ -85,7 +87,7 @@ read_iris_csv = function(filename = NULL, text = NULL) {
 #'
 #' @description First tries to extract only digits, separating these by underscore 
 #' when there are multiple blocks. If this give a non-valid  id, returns the 
-#' whole string without spaces and perios, hoping it makes sense.
+#' whole string without spaces and periods, hoping it makes sense.
 #' For internal use, but should be overridden for exotic IDs
 #' @param id One item from column Identifikation, e.g. "KEK-ZH-Nr.2013-1234"
 #' @examples 

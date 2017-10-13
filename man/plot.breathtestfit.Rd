@@ -4,7 +4,8 @@
 \alias{plot.breathtestfit}
 \title{S3 plot method for breathtestfit}
 \usage{
-\method{plot}{breathtestfit}(x, inc = 5, method_t50 = "maes_ghoos", ...)
+\method{plot}{breathtestfit}(x, inc = 5, method_t50 = "maes_ghoos",
+  line_size = 1, point_size = NULL, ...)
 }
 \arguments{
 \item{x}{object of class \code{breathtestfit}, as returned by \code{\link{nls_fit}}, 
@@ -14,20 +15,21 @@ in package \code{breathteststan},}
 \item{inc}{Increment for fitted curve plot in minutes}
 
 \item{method_t50}{Method for t50: "\code{maes_ghoos}", "\code{bluck_coward}" or 
-"\code{maes_ghoos_scint}"}
+"\code{maes_ghoos_scintigraphy}"}
+
+\item{line_size}{optional line width; can improve look for printouts}
+
+\item{point_size}{optional point size; determined dynamically when NULL}
 
 \item{...}{other parameters passed to methods. Not used}
 }
 \description{
 Plots 13C data and fits.
 }
-\details{
-A description of plotting
-}
 \examples{
 data = list(
-  A = simulate_breathtest_data(n_records = 6, seed = 100)$data,
-  B = simulate_breathtest_data(n_records = 4, seed = 187)$data 
+  A = simulate_breathtest_data(n_records = 6, seed = 100),
+  B = simulate_breathtest_data(n_records = 4, seed = 187) 
 )
 # cleanup_data combines the list into a data frame
 x = nls_fit(cleanup_data(data))

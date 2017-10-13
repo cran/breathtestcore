@@ -1,4 +1,4 @@
-context("Single-curve fitting with nls")
+context("Individual curve fitting with nls")
 
 test_that("Nice data return nice result", {
   d = simulate_breathtest_data(seed = 4711)   # default 10 records
@@ -9,9 +9,13 @@ test_that("Nice data return nice result", {
       minute = pmax(minute, 0.001)
     ) %>% 
     select(patient_id, group, minute, pdr)
+  comment(data) = "comment"
   fit = nls_fit(data)
   expect_is(fit, "breathtestfit")
   expect_is(fit, "breathtestnlsfit")
+  expect_identical(names(fit), c("coef", "data", "nls_fit"))
+  expect_equal(comment(fit$data), "comment")
+  expect_gt(sigma(fit), 0.5) # about 0.87
   cf = coef(fit)
   expect_is(cf, "data.frame")
   expect_equal(names(cf), c("patient_id", "group", "parameter", "method", "value"))

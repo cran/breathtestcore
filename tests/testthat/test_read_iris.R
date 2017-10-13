@@ -1,10 +1,7 @@
 context("13C read IRIS composite files test")
-d13file = function(filename){
-  system.file("extdata", filename, package = "breathtestcore")  
-}
 
 test_that("read_iris returns valid data set",{
-  filename = d13file("IrisMulti.TXT")
+  filename = btcore_file("IrisMulti.TXT")
   f = read_iris(filename)
 
   expect_is(f,"breathtest_data")
@@ -18,7 +15,7 @@ test_that("read_iris returns valid data set",{
 })
 
 test_that("read_iris from text and from file give almost the same results",{
-  filename = d13file("IrisMulti.TXT")
+  filename = btcore_file("IrisMulti.TXT")
   f = read_iris(filename)
   f1 = read_iris(text = readLines(filename)) 
   expect_equal(f1$file_name, "from text")
@@ -29,7 +26,7 @@ test_that("read_iris from text and from file give almost the same results",{
 
 
 test_that("read_iris returns valid data set when values are negative",{
-  filename = d13file("IrisNegativeValues.TXT")
+  filename = btcore_file("IrisNegativeValues.TXT")
   f = read_iris(filename)
   expect_is(f,"breathtest_data")
   expect_equal(nrow(f$data),12)
@@ -38,18 +35,18 @@ test_that("read_iris returns valid data set when values are negative",{
 })
 
 test_that("read_iris returns valid data set when weight/height is zero",{
-  filename = d13file("IrisZeroWeight.TXT")
+  filename = btcore_file("IrisZeroWeight.TXT")
   f = read_iris(filename)
   expect_is(f,"breathtest_data")
-  expect_true(is.na(f$weight))
-  expect_true(is.na(f$height))
+  expect_equal(f$weight, 75)
+  expect_equal(f$height, 180)
   expect_equal(nrow(f$data),14)
   expect_equal(ncol(f$data),3)
 })
 
 
 test_that("read_iris of CSV file throws",{
-  filename = d13file("IrisCSV.TXT")
+  filename = btcore_file("IrisCSV.TXT")
   expect_error( read_iris(filename),"valid IRIS")
 })
 

@@ -6,10 +6,11 @@
 #' 
 #' Bluck LJC, Jackson S, Vlasakakis G, Mander A (2011)
 #' Bayesian hierarchical methods to interpret  the 13C-octanoic acid breath
-#' test for gastric emptying. Digestion 83_96-107, page 98.
+#' test for gastric emptying. Digestion 83_96-107, page 98;  
+#' \url{http://iopscience.iop.org/article/10.1088/0967-3334/27/3/006/meta}.
 #' @param cf Named vector of coefficients; only \code{k} and \code{beta} are required.
 #' In this package, \code{k} is measured in units of 1/min (e.g. 0.01/min),
-#' in publications it is often quoated as 1/h (e.g. 0.6/h).
+#' in publications it is often quoted as 1/h (e.g. 0.6/h).
 #' @return Time where value is 1/2 of the maximum, i.e. t_{50} or t_{1/2} in minutes; 
 #' in the publication by Bluck et al, the parameter is called t_{1/2(in)}.
 #' @examples
@@ -100,8 +101,9 @@ tlag_bluck_coward = function(cf) {
 }
 
 #' @title Half-emptying time by Maes/Ghoos method
-#' @description Half-emptying time t50 as determined from an uncorrected fit to 
-#' the beta exponential function.
+#' @description Half-emptying time t50 as determined from the fit of a
+#' beta exponential function. In the Maes/Ghoos model, it is defined as the time
+#' when the area under curve (AUC) is 50\% of the AUC from 0 to infinity.
 #' 
 #' Maes B D, Ghoos Y F, Rutgeerts P J, Hiele M I, Geypens B and Vantrappen G 1994 
 #' Dig. Dis. Sci. 39 S104-6.
@@ -109,8 +111,17 @@ tlag_bluck_coward = function(cf) {
 #' @param cf named vector of coefficients; only \code{k} and \code{beta} are required
 #' note that \code{k} is measured in 1/min (e.g. 0.01/min),
 #' usually it is quoted as 1/h (e.g. 0.6/h).
-#' @return Time where value is 1/2 of maximum, i.e. \code{t50} in minutes
+#' @return Time in minutes when area under curve is 50\% of the AUC to infinity.
+#' In the Maes/Ghoos model, this is used as a surrogate for gastric emptying 
+#' half time \code{t50}.
 #' @seealso \code{\link{exp_beta}}, and \code{\link{t50_bluck_coward}} for an example.
+#' @examples 
+#' # Integral from 0 to infinity is 100 at dose 100 mg
+#' integrate(exp_beta, 0, Inf, beta = 1.5, k = 0.01, m = 1, dose = 100)
+#' t50_mg = t50_maes_ghoos(c(beta = 1.5, k = 0.01, dose = 100))
+#' t50_mg
+#' # Integral to half-emptying time \code{t50_maes_ghoos} is 50 
+#' integrate(exp_beta, 0, t50_mg, beta = 1.5, k = 0.01, m = 1, dose = 100)
 #' @export
 t50_maes_ghoos = function(cf) {
   as.numeric(unlist(-log(1 - 2 ^ (-1 / cf["beta"])) / cf["k"]))
@@ -133,7 +144,7 @@ tlag_maes_ghoos = function(cf) {
   as.numeric(unlist(log(cf["beta"]) / cf["k"]))
 }
 
-#' @title Half-emptying time t50 from Maes/Ghoos fit with scintigrapic correction
+#' @title Half-emptying time t50 from Maes/Ghoos fit with scintigraphic correction
 #' @description Half-emptying time t50 in minutes from beta exponential function fit,
 #' with linear and rather arbitrary correction for 
 #' scintigraphic values. This is given for comparison with published data only;

@@ -8,7 +8,7 @@ breathtest_data(patient_id, name = NA, first_name = NA, initials = NA,
   dob = NA, birth_year = NA, gender = NA, study = NA,
   pat_study_id = NA, file_name, device = "generic", substrate, record_date,
   start_time = record_date, end_time = record_date, test_no, dose = 100,
-  height = NA, weight = NA, t50 = NA, gec = NA, tlag = NA,
+  height = 180, weight = 75, t50 = NA, gec = NA, tlag = NA,
   data = data)
 }
 \arguments{
@@ -20,11 +20,11 @@ breathtest_data(patient_id, name = NA, first_name = NA, initials = NA,
 
 \item{initials}{optional, 2 characters, 1 number}
 
-\item{dob}{optional date of birth (not to be confused with "delta over baseline)}
+\item{dob}{optional date of birth (not to be confused with "delta over baseline")}
 
 \item{birth_year}{optional}
 
-\item{gender}{optional m or f}
+\item{gender}{optional \code{m} or \code{f}}
 
 \item{study}{optional name of study; can be used in population fit}
 
@@ -62,27 +62,32 @@ used; see \code{\link{dob_to_pdr}}}
 
 \item{tlag}{optional, only present if device computes this value}
 
-\item{data}{data frame with at least 5 rows and columns \code{minute} and one
-or both of \code{dob} or \code{pdr}. If pdr is missing, and height, weight 
-and substrate are given, computes pdr via function dob_to_pdr}
+\item{data}{data frame with at least 5 rows and columns \code{minute} or 
+\code{time} and one or both of \code{dob} or \code{pdr}. 
+If pdr is missing, and height, weight 
+and substrate are given, computes pdr via function \code{\link{dob_to_pdr}}. 
+When height and weight are missing,  defaults 180 cm and 75 kg are used instead.}
 }
 \description{
-Generates structure of class \code{breathtest_data} with required fields
-and optional fields. Optional fields by default are NA. This structure is used
-internally as an intermediate when reading in external file formats. All
-\code{read_xxx} functions return this structure, and any converter to 
-a new format should do the same to be used with \code{\link{cleanup_data}}. 
-To support a new format with, also update \code{\link{breathtest_read_function}} which
-returns the most likely function to read the file by reading a few lines in it.
+Generates structure of class \code{breathtest_data} with 
+required fields and optional fields. Optional fields by default are NA. 
+This structure is used internally as an intermediate when reading in 
+external file formats. All \code{read_xxx} functions return this structure, 
+or a list of this structure (e.g. \code{\link{read_breathid_xml}}), and any
+ converter to  a new format should do  the same to be used with 
+ \code{\link{cleanup_data}}. 
+To support a new format with, also update 
+\code{\link{breathtest_read_function}} which returns the most likely function 
+to read the file by reading a few lines in it.
 }
 \examples{
 # Read a file with known format
-iris_csv_file = system.file("extdata", "IrisCSV.TXT", package = "breathtestcore")
+iris_csv_file = btcore_file("IrisCSV.TXT")
 iris_csv_data = read_iris_csv(iris_csv_file)
 # Note that many filds are NA
 str(iris_csv_data)
 # Convert to a format that can be fed to one of the fit functions
 iris_df = cleanup_data(iris_csv_data)
-# Single curve fit
+# Individual curve fit
 coef(nls_fit(iris_df)) 
 }

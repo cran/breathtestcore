@@ -1,4 +1,4 @@
-#' @title Read any external files with breathtest data
+#' @title Read breathtest files of any format
 #' @description Uses \code{\link{breathtest_read_function}} to determine the file type
 #' and reads it if it has a valid format. 
 #' @param files A single filename, a list or a character vector of filenames.
@@ -9,9 +9,10 @@
 #' \code{stan_fit} in separate package \code{breathteststan}.  
 #' @examples
 #' files = c(
-#'   system.file("extdata", "IrisCSV.TXT", package = "breathtestcore"),
-#'   system.file("extdata", "350_20043_0_GER.txt", package = "breathtestcore"),
-#'   system.file("extdata", "IrisMulti.TXT", package = "breathtestcore")
+#'   group_a = btcore_file("IrisCSV.TXT"),
+#'   group_a = btcore_file("350_20043_0_GER.txt"),
+#'   group_b = btcore_file("IrisMulti.TXT"),
+#'   group_b = btcore_file("NewBreathID_01.xml")  
 #'  )
 #'  bt = read_any_breathtest(files)
 #'  str(bt, 1)
@@ -23,10 +24,22 @@
 #'  # Plot population fit with decimated data
 #'  plot(nlme_fit(bt_df))
 # })
+#' @importFrom purrr modify_if flatten
 #' @export
 read_any_breathtest = function(files){
+  # https://stackoverflow.com/questions/46097093/partially-unnest-a-list
   files = as.list(files)
-  lapply(files, function(file) breathtest_read_function(file)(file))
+  ret = 
+    lapply(files, function(file) { 
+      f = breathtest_read_function(file)
+      if (is.null(f)) return(NULL)
+      f(file)
+    })   %>% 
+    modify_if(function(x) is(x, "breathtest_data"), list ) %>% 
+    flatten() 
+  class(ret) = "breathtest_data_list"
+  ret
 }
+  
 
 

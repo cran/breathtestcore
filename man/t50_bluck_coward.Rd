@@ -9,7 +9,7 @@ t50_bluck_coward(cf)
 \arguments{
 \item{cf}{Named vector of coefficients; only \code{k} and \code{beta} are required.
 In this package, \code{k} is measured in units of 1/min (e.g. 0.01/min),
-in publications it is often quoated as 1/h (e.g. 0.6/h).}
+in publications it is often quoted as 1/h (e.g. 0.6/h).}
 }
 \value{
 Time where value is 1/2 of the maximum, i.e. t_{50} or t_{1/2} in minutes; 
@@ -23,7 +23,8 @@ See also equation G(n,t) in
 
 Bluck LJC, Jackson S, Vlasakakis G, Mander A (2011)
 Bayesian hierarchical methods to interpret  the 13C-octanoic acid breath
-test for gastric emptying. Digestion 83_96-107, page 98.
+test for gastric emptying. Digestion 83_96-107, page 98;  
+\url{http://iopscience.iop.org/article/10.1088/0967-3334/27/3/006/meta}.
 }
 \examples{
 # From table 3 and 4 in Bluck et al.; values for \\code{k} and \\code{beta} 

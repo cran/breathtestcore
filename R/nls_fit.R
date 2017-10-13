@@ -1,4 +1,4 @@
-#' @title Single curve fit with nls to 13C breath test data
+#' @title Individual curve fit with nls to 13C breath test data
 #' @description Fits individual exponential beta curves to 13C breath test time series
 #'
 #' @param data Data frame or tibble as created by \code{\link{cleanup_data}}, 
@@ -85,12 +85,11 @@ nls_fit = function(data, dose = 100,
 
   methods = c(
     "exp_beta","exp_beta","exp_beta","exp_beta","bluck_coward","maes_ghoos",
-    "maes_ghoos_scint", "bluck_coward","maes_ghoos"
+    "maes_ghoos_scintigraphy", "bluck_coward","maes_ghoos"
   )
   parameters = c("m", "k", "beta", "deviance", "t50", "t50","t50","tlag","tlag")
-  # TODO: replace the for-loop by purring (for elegance, speed is secondars)
   pars = list()
-  for (i in 1:nrow(cf))  {
+  for (i in seq_len(nrow(cf)))  {
     cf1 = cf[i, , drop = FALSE]
     pars[[i]] = data_frame(
       patient_id = cf1$patient_id,
@@ -117,7 +116,7 @@ nls_fit = function(data, dose = 100,
     filter(value != 0) %>% 
     tibble::as_tibble(cf)
   
-  ret = list(coef = cf, data = data)
+  ret = list(coef = cf, data = data, nls_fit = bid.nls)
   class(ret) = c("breathtestnlsfit", "breathtestfit" )
   ret
 }

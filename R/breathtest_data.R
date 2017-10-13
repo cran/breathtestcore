@@ -1,18 +1,21 @@
 #' @title Data structure with PDR data and descriptors for breath test records
-#' @description Generates structure of class \code{breathtest_data} with required fields
-#' and optional fields. Optional fields by default are NA. This structure is used
-#' internally as an intermediate when reading in external file formats. All
-#' \code{read_xxx} functions return this structure, and any converter to 
-#' a new format should do the same to be used with \code{\link{cleanup_data}}. 
-#' To support a new format with, also update \code{\link{breathtest_read_function}} which
-#' returns the most likely function to read the file by reading a few lines in it.
+#' @description Generates structure of class \code{breathtest_data} with 
+#' required fields and optional fields. Optional fields by default are NA. 
+#' This structure is used internally as an intermediate when reading in 
+#' external file formats. All \code{read_xxx} functions return this structure, 
+#' or a list of this structure (e.g. \code{\link{read_breathid_xml}}), and any
+#'  converter to  a new format should do  the same to be used with 
+#'  \code{\link{cleanup_data}}. 
+#' To support a new format with, also update 
+#' \code{\link{breathtest_read_function}} which returns the most likely function 
+#' to read the file by reading a few lines in it.
 #' @param patient_id required, string or number for unique identification
 #' @param name optional
 #' @param first_name optional
 #' @param initials optional, 2 characters, 1 number
-#' @param dob optional date of birth (not to be confused with "delta over baseline)
+#' @param dob optional date of birth (not to be confused with "delta over baseline")
 #' @param birth_year optional
-#' @param gender optional m or f
+#' @param gender optional \code{m} or \code{f}
 #' @param study optional name of study; can be used in population fit
 #' @param pat_study_id optional; patient number within study_ does not need to be globally unique
 #' @param file_name required; file where data were read from, or other unique string_
@@ -34,18 +37,20 @@
 #' @param t50  optional, only present if device computes this value
 #' @param gec  optional, only present if device computes this value
 #' @param tlag optional, only present if device computes this value
-#' @param data data frame with at least 5 rows and columns \code{minute} and one
-#' or both of \code{dob} or \code{pdr}. If pdr is missing, and height, weight 
-#' and substrate are given, computes pdr via function dob_to_pdr
+#' @param data data frame with at least 5 rows and columns \code{minute} or 
+#' \code{time} and one or both of \code{dob} or \code{pdr}. 
+#' If pdr is missing, and height, weight 
+#' and substrate are given, computes pdr via function \code{\link{dob_to_pdr}}. 
+#' When height and weight are missing,  defaults 180 cm and 75 kg are used instead.
 #' @examples 
 #' # Read a file with known format
-#' iris_csv_file = system.file("extdata", "IrisCSV.TXT", package = "breathtestcore")
+#' iris_csv_file = btcore_file("IrisCSV.TXT")
 #' iris_csv_data = read_iris_csv(iris_csv_file)
 #' # Note that many filds are NA
 #' str(iris_csv_data)
 #' # Convert to a format that can be fed to one of the fit functions
 #' iris_df = cleanup_data(iris_csv_data)
-#' # Single curve fit
+#' # Individual curve fit
 #' coef(nls_fit(iris_df)) 
 
 #' @export
@@ -66,8 +71,8 @@ breathtest_data = function(patient_id,
                            end_time = record_date,
                            test_no ,
                            dose = 100,
-                           height = NA,
-                           weight = NA,
+                           height = 180,
+                           weight = 75,
                            t50 = NA,
                            gec = NA,
                            tlag = NA,
@@ -77,8 +82,8 @@ breathtest_data = function(patient_id,
   if (nrow(data) < 5)
     stop("Function breathtest_data: data should have a least 5 rows")
   nd = names(data)
-  if (nd[1] != "time")
-    stop("Function breathtest_data: first data column must be <<time>>")
+  if (!(nd[1] %in% c("time", "minute")))
+    stop("Function breathtest_data: first data column must be <<time>> or <<minute>>. It is:<< ", nd[1], ">>")
   # rename data column to minute
   names(data)[1] = "minute"
   if (!sum(nd[-1] %in% c("pdr", "dob")) > 0)
@@ -100,8 +105,8 @@ breathtest_data = function(patient_id,
     stop("function breathtest_data: gender should be 'm' or 'f'")
   # force NA if weight or height is not 0
   if (weight <= 30 || height < 1) {
-    height = NA
-    weight = NA
+    height = 180
+    weight = 75
   }
   if (!"pdr" %in% nd)
     data$pdr = dob_to_pdr(data$dob, weight, height, mw = substrate)
