@@ -15,8 +15,7 @@ University Hospital Zurich}.
 Most breath samples from normals were collected with bags and analyzed by
 \href{http://kibion.com/content/uploads/2013/07/113-01_IRIS_Consumables_DE.pdf}{IRIS/Wagner}
 infrared spectroscopy. Patient samples were recorded with the continuous
-monitoring system
-\href{http://www.exalenz.com/mainmenu/breathid-hp/urea-breath-test}{BreathID}.
+monitoring system \href{http://www.exalenz.com}{BreathID}.
 
 \describe{
   \item{patient_id}{Patient identifier, starting with \code{norm} for normals
@@ -35,7 +34,7 @@ data(usz_13c)
 \dontrun{
 str(usz_13c)
 # Plot all records; this needs some time
-pdf("usz_13c.pdf", height= 30)
+pdf(file.path(tempdir(), "usz_13c.pdf"), height= 30)
 # null_fit makes data plotable without fitting a model
 plot(null_fit(usz_13c))
 dev.off()

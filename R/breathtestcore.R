@@ -6,8 +6,7 @@
 #' Most breath samples from normals were collected with bags and analyzed by
 #' \href{http://kibion.com/content/uploads/2013/07/113-01_IRIS_Consumables_DE.pdf}{IRIS/Wagner}
 #' infrared spectroscopy. Patient samples were recorded with the continuous
-#' monitoring system
-#' \href{http://www.exalenz.com/mainmenu/breathid-hp/urea-breath-test}{BreathID}.
+#' monitoring system \href{http://www.exalenz.com}{BreathID}.
 #'
 #' \describe{
 #'   \item{patient_id}{Patient identifier, starting with \code{norm} for normals
@@ -29,7 +28,7 @@
 #' \dontrun{
 #' str(usz_13c)
 #' # Plot all records; this needs some time
-#' pdf("usz_13c.pdf", height= 30)
+#' pdf(file.path(tempdir(), "usz_13c.pdf"), height= 30)
 #' # null_fit makes data plotable without fitting a model
 #' plot(null_fit(usz_13c))
 #' dev.off()
@@ -66,7 +65,7 @@ NULL
 #' in a cross-over design from the division of 
 #' \href{http://www.gastroenterologie.usz.ch/Seiten/default.aspx}{Gastroenterology and Hepatology,
 #' University Hospital Zurich}. See
-#' \href{http://onlinelibrary.wiley.com/doi/10.1111/nmo.12025/abstract}{Kuyumcu et al.,
+#' \href{https://onlinelibrary.wiley.com/doi/abs/10.1111/nmo.12025}{Kuyumcu et al.,
 #' Gastric secretion does not affect...}.
 #' 
 #' Data are formatted as described in \code{\link{usz_13c}}. In addition, half

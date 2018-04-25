@@ -7,7 +7,7 @@
 #' Bluck LJC, Jackson S, Vlasakakis G, Mander A (2011)
 #' Bayesian hierarchical methods to interpret  the 13C-octanoic acid breath
 #' test for gastric emptying. Digestion 83_96-107, page 98;  
-#' \url{http://iopscience.iop.org/article/10.1088/0967-3334/27/3/006/meta}.
+#' \url{https://iopscience.iop.org/article/10.1088/0967-3334/27/3/006/meta}.
 #' @param cf Named vector of coefficients; only \code{k} and \code{beta} are required.
 #' In this package, \code{k} is measured in units of 1/min (e.g. 0.01/min),
 #' in publications it is often quoted as 1/h (e.g. 0.6/h).
@@ -150,6 +150,9 @@ tlag_maes_ghoos = function(cf) {
 #' scintigraphic values. This is given for comparison with published data only;
 #' there is little justification to use it, even if it is closer to real gastric
 #' emptying times as determined by MRI or scintigraphy.
+#' Ghoos YF, Maes BD, Geypens BJ, Mys G, Hiele MI, Rutgeerts PJ, Vantrappen G. 
+#' Measurement of gastric emptying rate of solids by means of a carbon-labeled 
+#' octanoic acid breath test. Gastroenterology. 1993;104:1640-1647.
 #' @param cf named vector of coefficients; only \code{k} and \code{beta} are required
 #' @return Time where value is 1/2 of maximum, i.e. t50 in minutes.
 #' @seealso \code{\link{exp_beta}}, and \code{\link{t50_bluck_coward}} for an example.

@@ -49,7 +49,7 @@ g %>% filter(beta == 1.5 & k == 0.015 ) %>%
   
   
 
-## ---- gamma, fig.cap = "Gamma function from @Ghoos1993 definition as points, and beta exponential as line. Both function look very similar, but the area under the gamma function is infinite and thus cannot be used to compute t50.", echo = FALSE----
+## ---- gamma, fig.cap = "Gamma function from @Ghoos1993 definition as points, and fitted beta exponential as line. Both function look very similar, but the area under the gamma function is infinite and thus cannot be used to compute t50.", echo = FALSE----
 gam = function(minute, a, b, c){
   a * minute^b * exp(-c*minute)
 }
@@ -157,7 +157,7 @@ gridExtra::grid.arrange(p1, p2, p3, ncol = 3, nrow = 1)
 
 
 
-## ---- sim2stage, fig.cap = "Simulated response of a two-stage breath test procedure. The peak within the first hour is from acetate directly release in the small bowel, the second wider peak is the result of the convolution of transport emptying and pharmacokinetics."----
+## ---- sim2stage, fig.cap = "Simulated response of a two-stage breath test procedure. The peak within the first hour is from acetate directly released in the small bowel, the second wider peak is the result of the convolution of transport emptying and pharmacokinetics."----
   data.frame(pdr = c(ff_0[0:59]*50, rep(0, 20), cv$pdr)) %>% 
   mutate(
     minute = 0:(n()-1)
