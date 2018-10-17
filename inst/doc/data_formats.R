@@ -1,5 +1,7 @@
 ## ---- echo = FALSE, include = FALSE--------------------------------------
 library(knitr)
+library(dplyr)
+library(stringr)
 opts_chunk$set(comment = NA, fig.width = 4, fig.height = 3)
 knitr::opts_knit$set(unnamed.chunk.label = "btcore_data_")
 options(digits = 3)
@@ -59,7 +61,7 @@ data("usz_13c")
 cat("usz_13c has data from", length(unique(usz_13c$patient_id)), "patients with" , 
     length(unique(usz_13c$group)), "different meals")
 
-## ---- fig.height = 3-----------------------------------------------------
+## ---- fig.height = 3, include = FALSE------------------------------------
 knitr::include_graphics("breathtestshiny.png")
 
 ## ---- echo = FALSE, include = FALSE--------------------------------------

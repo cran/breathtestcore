@@ -25,7 +25,7 @@ read_iris = function(filename = NULL, text = NULL) {
   if (is.null(text)) {
     if (!file.exists(filename))
       stop(paste0("file ", filename, " does not exist."))
-    text = readLines(filename)
+    text = readLines(filename, encoding = "latin1")
   } else {
     filename = 'from text'
   }
@@ -68,7 +68,9 @@ read_iris = function(filename = NULL, text = NULL) {
   if (nchar(name) > 0 && nchar(first_name) > 0)
     initials =  paste0(str_sub(name, 1, 1),
                        str_sub(first_name, 1, 1))
-  data = utils::read.csv(textConnection(text[-(1:data_row)]))
+  tc = textConnection(text[-(1:data_row)])
+  data = utils::read.csv(tc)
+  close(tc)
   data = try(data[, c("Testzeit..min.",
                       "DOB..o.oo.",
                       "Atom.ppm.Excess.13C..ppm.")])
