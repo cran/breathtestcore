@@ -1,4 +1,4 @@
-fee1477883868183b95d32c82ce2aca5 *DESCRIPTION
+a809b522e440cb85ef77dffb826b8ea4 *DESCRIPTION
 a585a40c68bdc78437f4ce72be0dd624 *NAMESPACE
 ab70eb5479f340b5c2ff60a15173babd *R/breathtest_data.R
 14ebf25f1368499eeb91d2368244b49c *R/breathtest_parameters.R
@@ -13,7 +13,7 @@ d5c28b0ab3dfbd6078090faf23c148b7 *R/coef_breathtestfit.R
 080793456d0477b95e54fe827de8cdc4 *R/dob_to_pdr.R
 4402c32034bff00438370cdc249dcb52 *R/exp_beta.R
 c9693741c6fdd7b948bf2fc51faffb0c *R/nlme_fit.R
-926d4c0721c3c2a5a953f252c63ea781 *R/nls_fit.R
+ed2837d4cd9f7f9b02cadddbf202e0e3 *R/nls_fit.R
 6c2c2de2ff9cf96754f440fc3afb91b4 *R/null_fit.R
 c0886b5f061534c6990958170e2bcb85 *R/plot_breathtestfit.R
 031ded1bcf067a563fe3b93cd4434bb9 *R/read_any_breathtest.R
@@ -31,10 +31,10 @@ b2ce50116e80a579ae972ead8159ff08 *R/subsample_data.R
 27ac754be697b4a6e97171f1024efa31 *data/usz_13c_d.rda
 757ae900417e4f9fae7970ccde1eae3a *inst/doc/data_formats.R
 47a0d9b5bcdd097b4b8ad89a3a0329d0 *inst/doc/data_formats.Rmd
-892f77a0f68e5c35e95232c8f1ea36f3 *inst/doc/data_formats.html
+b53a8c0575839ff88b011e6fa4ce2a89 *inst/doc/data_formats.html
 c8ceb576bfd585342cd97401536b837e *inst/doc/methods_and_concepts.R
 5d3519f2f09df8fcf40145c25d811c88 *inst/doc/methods_and_concepts.Rmd
-e1f73eb12a067ac10deb47ba399facbc *inst/doc/methods_and_concepts.html
+c7e655f81a36ed51596e474dd2e2f673 *inst/doc/methods_and_concepts.html
 cbda6d04504ffe7c67090d05a4ec2ee8 *inst/extdata/350_20023_0_GERWithNan.txt
 1bde1df495fb955dade29223d7f77931 *inst/extdata/350_20043_0_GER.txt
 f4651303b420915d722b7d268072a360 *inst/extdata/350_20043_0_GERBadHeader.txt
@@ -58,6 +58,7 @@ c6229706bad138e8abf8421a378333f2 *inst/extdata/NewBreathID_01.xml
 958e10164a7c4acf2b1399d5f224e2b1 *inst/extdata/ShortRecords.csv
 dfb4ff78c01917c9ddb96adb417b19ec *inst/extdata/Standard.TXT
 1e4e895852f3afbc74b4f976f33a69ca *inst/extdata/badCurve.txt
+ab38db76349550e1960a7486b92eb76d *inst/extdata/invalidnls.xml
 02e15c7ca924a229673d290df4ebc543 *man/AIC.breathtestnlmefit.Rd
 cb52825a1cab8fc076b1f4067d0a2d89 *man/augment.breathtestfit.Rd
 c02256a8e11466767aca808becb40f12 *man/breathtest_data.Rd
@@ -97,16 +98,16 @@ b0531d532e4ac220b8add7ddd481fe2e *man/usz_13c_a.Rd
 e61e27a06fce41a347c30d9b220276e5 *tests/testthat/test_breathtest_parameters.R
 af147c8d6d3ed9db22f067a2cf055ea9 *tests/testthat/test_breathtest_read_function.R
 5b3e072f026ff6b58522524c00e11435 *tests/testthat/test_broom.R
-8cfa346b976256d991d49facada9e359 *tests/testthat/test_cleanup_data.R
-95dbf5267cbcf30102bc3abdbfc4e255 *tests/testthat/test_coef_by_group.R
+13d4aaf5c0976b159623490dcdae06b9 *tests/testthat/test_cleanup_data.R
+0311016865e1a54306865bb13a101a64 *tests/testthat/test_coef_by_group.R
 c2e16ba0e7d70d93e57e18d6f33920a4 *tests/testthat/test_coef_diff_by_group.R
 abf38cf8118e92bd1e6d675881bf7237 *tests/testthat/test_exp_beta.R
 a3ac22e718d25c6c1aea88dd2b2513f1 *tests/testthat/test_nlme_fit.R
-2f4e6fb27c71f11b2f36830e11ff2665 *tests/testthat/test_nls_fit.R
+d46a0b2b292ef848e8a5441e506fe079 *tests/testthat/test_nls_fit.R
 f3fc15ee52cd83c108b08d6d4e2dda40 *tests/testthat/test_plot_breathtestfit.R
 3f7679d2d95c11ba7ad5e3402f478161 *tests/testthat/test_read_any_breathtest.R
 00a2d418917fc2a774f842d3aa86c93b *tests/testthat/test_read_breathid.R
-714e45d6b2d150aa06a4a38997f87d6e *tests/testthat/test_read_breathid_xml.R
+4c5902f0fe7000639df8cc317da21449 *tests/testthat/test_read_breathid_xml.R
 88a55a843393a10e18ec740ee46e288c *tests/testthat/test_read_excel.R
 bb43242567508eab60efba4eb51de7c6 *tests/testthat/test_read_iris.R
 df6b1d8f6b4fcfc4ca9fd74875e2449a *tests/testthat/test_read_iris_csv.R
