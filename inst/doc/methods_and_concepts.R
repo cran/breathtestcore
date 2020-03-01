@@ -1,4 +1,4 @@
-## ---- echo = FALSE, include = FALSE--------------------------------------
+## ---- echo = FALSE, include = FALSE-------------------------------------------
 suppressPackageStartupMessages(library(knitr))
 suppressPackageStartupMessages(library(gridExtra))
 suppressPackageStartupMessages(library(dplyr))
@@ -9,7 +9,7 @@ opts_chunk$set(comment = NA, fig.width = 4, fig.height = 3)
 options(digits = 3)
 set.seed(4711)
 
-## ---- eval = FALSE-------------------------------------------------------
+## ---- eval = FALSE------------------------------------------------------------
 #  exp_beta = function(minute,dose,m,k,beta) {
 #       m*dose*k*beta*(1-exp(-k*minute))^(beta-1)*exp(-k*minute)
 #  }
@@ -89,12 +89,12 @@ p2 = ff %>%
 gridExtra::grid.arrange(p1, p2, ncol = 2, nrow = 1)
 
 
-## ---- echo = FALSE-------------------------------------------------------
+## ---- echo = FALSE------------------------------------------------------------
 tempt = 100
 beta = 1.8
 cap = paste0("Meal volume (left) and flow when gastric emptying function is a power exponential function. Slope was computed with  function `gastempt::powexp_slope()` with inverted sign. 400 ml initial value, tempt = ", tempt, ", beta = ", beta, " Half empyting times t50 are marked by arrows." )
 
-## ---- powexp, fig.height = 3, fig.width = 8, echo = FALSE, fig.cap = cap----
+## ---- powexp, fig.height = 3, fig.width = 8, echo = FALSE, fig.cap = cap------
 
 # Stolen and simplfied from package gastempt
 powexp = function(t, v0, tempt, beta){
