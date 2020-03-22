@@ -54,7 +54,7 @@ gam = function(minute, a, b, c){
   a * minute^b * exp(-c*minute)
 }
 
-data_frame(minute = seq(0, 300, by = 10)) %>% 
+tibble(minute = seq(0, 300, by = 10)) %>%
   mutate(
     pdr = gam(minute, 1, 1.5, 0.03)
   ) %>% 
