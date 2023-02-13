@@ -12,7 +12,7 @@
 
 <meta name="author" content="Dieter Menne, dieter.menne@menne.biomed.de" />
 
-<meta name="date" content="2022-04-07" />
+<meta name="date" content="2023-02-13" />
 
 <title>Data formats</title>
 
@@ -31,23 +31,23 @@ document.addEventListener('DOMContentLoaded', function(e) {
 </script>
 
 <style type="text/css">
-  code{white-space: pre-wrap;}
-  span.smallcaps{font-variant: small-caps;}
-  span.underline{text-decoration: underline;}
-  div.column{display: inline-block; vertical-align: top; width: 50%;}
-  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
-  ul.task-list{list-style: none;}
-    </style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+span.underline{text-decoration: underline;}
+div.column{display: inline-block; vertical-align: top; width: 50%;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+</style>
 
 
 
 <style type="text/css">
-  code {
-    white-space: pre;
-  }
-  .sourceCode {
-    overflow: visible;
-  }
+code {
+white-space: pre;
+}
+.sourceCode {
+overflow: visible;
+}
 </style>
 <style type="text/css" data-origin="pandoc">
 pre > code.sourceCode { white-space: pre; position: relative; }
@@ -65,55 +65,54 @@ pre > code.sourceCode { white-space: pre-wrap; }
 pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
-  { counter-reset: source-line 0; }
+{ counter-reset: source-line 0; }
 pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
+{ position: relative; left: -4em; counter-increment: source-line; }
 pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-    color: #aaaaaa;
-  }
-pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+{ content: counter(source-line);
+position: relative; left: -1em; text-align: right; vertical-align: baseline;
+border: none; display: inline-block;
+-webkit-touch-callout: none; -webkit-user-select: none;
+-khtml-user-select: none; -moz-user-select: none;
+-ms-user-select: none; user-select: none;
+padding: 0 4px; width: 4em;
+color: #aaaaaa;
+}
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa; padding-left: 4px; }
 div.sourceCode
-  {   }
+{ }
 @media screen {
 pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
-code span.al { color: #ff0000; font-weight: bold; } /* Alert */
-code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
-code span.at { color: #7d9029; } /* Attribute */
-code span.bn { color: #40a070; } /* BaseN */
-code span.bu { } /* BuiltIn */
-code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
-code span.ch { color: #4070a0; } /* Char */
-code span.cn { color: #880000; } /* Constant */
-code span.co { color: #60a0b0; font-style: italic; } /* Comment */
-code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
-code span.do { color: #ba2121; font-style: italic; } /* Documentation */
-code span.dt { color: #902000; } /* DataType */
-code span.dv { color: #40a070; } /* DecVal */
-code span.er { color: #ff0000; font-weight: bold; } /* Error */
-code span.ex { } /* Extension */
-code span.fl { color: #40a070; } /* Float */
-code span.fu { color: #06287e; } /* Function */
-code span.im { } /* Import */
-code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
-code span.kw { color: #007020; font-weight: bold; } /* Keyword */
-code span.op { color: #666666; } /* Operator */
-code span.ot { color: #007020; } /* Other */
-code span.pp { color: #bc7a00; } /* Preprocessor */
-code span.sc { color: #4070a0; } /* SpecialChar */
-code span.ss { color: #bb6688; } /* SpecialString */
-code span.st { color: #4070a0; } /* String */
-code span.va { color: #19177c; } /* Variable */
-code span.vs { color: #4070a0; } /* VerbatimString */
-code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
-
+code span.al { color: #ff0000; font-weight: bold; } 
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.at { color: #7d9029; } 
+code span.bn { color: #40a070; } 
+code span.bu { color: #008000; } 
+code span.cf { color: #007020; font-weight: bold; } 
+code span.ch { color: #4070a0; } 
+code span.cn { color: #880000; } 
+code span.co { color: #60a0b0; font-style: italic; } 
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.do { color: #ba2121; font-style: italic; } 
+code span.dt { color: #902000; } 
+code span.dv { color: #40a070; } 
+code span.er { color: #ff0000; font-weight: bold; } 
+code span.ex { } 
+code span.fl { color: #40a070; } 
+code span.fu { color: #06287e; } 
+code span.im { color: #008000; font-weight: bold; } 
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.kw { color: #007020; font-weight: bold; } 
+code span.op { color: #666666; } 
+code span.ot { color: #007020; } 
+code span.pp { color: #bc7a00; } 
+code span.sc { color: #4070a0; } 
+code span.ss { color: #bb6688; } 
+code span.st { color: #4070a0; } 
+code span.va { color: #19177c; } 
+code span.vs { color: #4070a0; } 
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } 
 </style>
 <script>
 // apply pandoc div.sourceCode style to pre.sourceCode instead
@@ -122,13 +121,20 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   for (var i = 0; i < sheets.length; i++) {
     if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
     try { var rules = sheets[i].cssRules; } catch (e) { continue; }
-    for (var j = 0; j < rules.length; j++) {
+    var j = 0;
+    while (j < rules.length) {
       var rule = rules[j];
       // check if there is a div.sourceCode rule
-      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") continue;
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") {
+        j++;
+        continue;
+      }
       var style = rule.style.cssText;
       // check if color or background-color is set
-      if (rule.style.color === '' && rule.style.backgroundColor === '') continue;
+      if (rule.style.color === '' && rule.style.backgroundColor === '') {
+        j++;
+        continue;
+      }
       // replace div.sourceCode by a pre.sourceCode rule
       sheets[i].deleteRule(j);
       sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
@@ -334,7 +340,7 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 
 <h1 class="title toc-ignore">Data formats</h1>
 <h4 class="author">Dieter Menne, <a href="mailto:dieter.menne@menne.biomed.de" class="email">dieter.menne@menne.biomed.de</a></h4>
-<h4 class="date">2022-04-07</h4>
+<h4 class="date">2023-02-13</h4>
 
 
 
@@ -344,7 +350,7 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 files, and in several vendor-specific formats, e.g. from BreathID and
 Wagner/IRIS. A collection of sample files with and without errors is
 available in the directory
-<code>C:/R/library/breathtestcore/extdata</code>; function
+<code>C:/R/R-42~1.2/library/breathtestcore/extdata</code>; function
 <code>btcore_file()</code> retrieves the names and long path of the
 available data sets.</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(breathtestcore)</span>
@@ -353,7 +359,7 @@ available data sets.</p>
 [3] &quot;350_20043_0_GERBadHeader.txt&quot;     &quot;350_20043_0_GERDuplicateTime.txt&quot;
 [5] &quot;350_20043_0_GERNoData.txt&quot;        &quot;350_20043_0_GERNoT50.txt&quot;        </code></pre>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">btcore_file</span>(<span class="st">&quot;Standard.TXT&quot;</span>)</span></code></pre></div>
-<pre><code>[1] &quot;C:/Users/Dieter/AppData/Local/Temp/RtmpUrjDPa/Rinst369815e2d8f/breathtestcore/extdata/Standard.TXT&quot;</code></pre>
+<pre><code>[1] &quot;C:/Users/Dieter/AppData/Local/Temp/Rtmpu8TAeX/Rinst20206e7d28ae/breathtestcore/extdata/Standard.TXT&quot;</code></pre>
 <ul>
 <li>When you know the format, you can read the data using the special
 functions, e.g. <code>read_breathid()</code> or
@@ -377,7 +383,7 @@ different file formats at once, use function
  - attr(*, &quot;class&quot;)= chr &quot;breathtest_data_list&quot;</code></pre>
 <div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a> bt_df <span class="ot">=</span> <span class="fu">cleanup_data</span>(bt)</span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a> <span class="fu">str</span>(bt_df)</span></code></pre></div>
-<pre><code>tibble [101 x 4] (S3: tbl_df/tbl/data.frame)
+<pre><code>tibble [101 × 4] (S3: tbl_df/tbl/data.frame)
  $ patient_id: chr [1:101] &quot;123456&quot; &quot;123456&quot; &quot;123456&quot; &quot;123456&quot; ...
  $ group     : chr [1:101] &quot;A&quot; &quot;A&quot; &quot;A&quot; &quot;A&quot; ...
  $ minute    : num [1:101] 0.01 10 20 45 60 75 90 105 120 140 ...
@@ -388,7 +394,7 @@ frame/tibble and adds a grouping variable.</p>
 <div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a> nf <span class="ot">=</span> <span class="fu">null_fit</span>(bt_df)</span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a> <span class="fu">str</span>(nf)</span></code></pre></div>
 <pre><code>List of 1
- $ data: tibble [101 x 4] (S3: tbl_df/tbl/data.frame)
+ $ data: tibble [101 × 4] (S3: tbl_df/tbl/data.frame)
   ..$ patient_id: chr [1:101] &quot;123456&quot; &quot;123456&quot; &quot;123456&quot; &quot;123456&quot; ...
   ..$ group     : chr [1:101] &quot;A&quot; &quot;A&quot; &quot;A&quot; &quot;A&quot; ...
   ..$ minute    : num [1:101] 0.01 10 20 45 60 75 90 105 120 140 ...
@@ -479,9 +485,9 @@ gold standards; see the example in the documentation.</li>
 <p>The easiest way to supply generic formats is from Excel files. The
 data formats described in the following are shown as examples in the
 workbook
-<code>C:/R/library/breathtestcore/extdata/ExcelSamples.xlsx</code>. Any
-other tab-separated data set can directly be inserted into the editor of
-the <a href="https://github.com/dmenne/breathtestshiny">breathtestshiny</a> web
+<code>C:/R/R-42~1.2/library/breathtestcore/extdata/ExcelSamples.xlsx</code>.
+Any other tab-separated data set can directly be inserted into the
+editor of the <a href="https://github.com/dmenne/breathtestshiny">breathtestshiny</a> web
 app using copy/paste.</p>
 <div id="how-to-use-the-excel-data-formats" class="section level2">
 <h2>How to use the Excel data formats</h2>
@@ -508,28 +514,28 @@ GUI</a>, you can upload the file, or simply paste it into the editor.
 This is the easiest method to get a fit for a single patient.</p>
 <div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>(<span class="at">bt =</span> <span class="fu">read_breathtest_excel</span>(<span class="fu">btcore_file</span>(<span class="st">&quot;ExcelSamples.xlsx&quot;</span>), <span class="st">&quot;2col&quot;</span>))</span></code></pre></div>
 <pre><code>[[1]]
-# A tibble: 22 x 2
+# A tibble: 22 × 2
   minute   pdr
    &lt;dbl&gt; &lt;dbl&gt;
 1   0.42 0.547
 2  11.9  1.64 
 3  23.4  3.89 
 4  34.9  6.13 
-# ... with 18 more rows</code></pre>
+# … with 18 more rows</code></pre>
 <p>A list is returned, and its only element is a tibble with two
 columns. To create a standardized format for fitting and plotting, pass
 it through <code>cleanup_data</code> which adds dummy columns
 <code>patient_id</code> (all <code>pat_a</code>), and <code>group</code>
 (all <code>A</code>)</p>
 <div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>(<span class="at">cbt =</span> <span class="fu">cleanup_data</span>(bt))</span></code></pre></div>
-<pre><code># A tibble: 22 x 4
+<pre><code># A tibble: 22 × 4
   patient_id group minute   pdr
   &lt;chr&gt;      &lt;chr&gt;  &lt;dbl&gt; &lt;dbl&gt;
 1 pat_a      A       0.42 0.547
 2 pat_a      A      11.9  1.64 
 3 pat_a      A      23.4  3.89 
 4 pat_a      A      34.9  6.13 
-# ... with 18 more rows</code></pre>
+# … with 18 more rows</code></pre>
 <p>Compute the fit and plot</p>
 <div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>cbt <span class="sc">%&gt;%</span> <span class="fu">nls_fit</span>() <span class="sc">%&gt;%</span> <span class="fu">plot</span>()</span></code></pre></div>
 <p><img src="data:image/png;base64,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" /><!-- --></p>
@@ -540,23 +546,23 @@ it through <code>cleanup_data</code> which adds dummy columns
 <code>patient_id</code> which may be numeric or a string.</p>
 <div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>(<span class="at">bt =</span> <span class="fu">read_breathtest_excel</span>(<span class="fu">btcore_file</span>(<span class="st">&quot;ExcelSamples.xlsx&quot;</span>), <span class="st">&quot;3col&quot;</span>))</span></code></pre></div>
 <pre><code>[[1]]
-# A tibble: 43 x 3
+# A tibble: 43 × 3
   patient_id minute   pdr
   &lt;chr&gt;       &lt;dbl&gt; &lt;dbl&gt;
 1 7951500      0.42 0.547
 2 7951500     11.9  1.64 
 3 7951500     23.4  3.89 
 4 7951500     34.9  6.13 
-# ... with 39 more rows</code></pre>
+# … with 39 more rows</code></pre>
 <div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>(<span class="at">cbt =</span> <span class="fu">cleanup_data</span>(bt))</span></code></pre></div>
-<pre><code># A tibble: 43 x 4
+<pre><code># A tibble: 43 × 4
   patient_id group minute   pdr
   &lt;chr&gt;      &lt;chr&gt;  &lt;dbl&gt; &lt;dbl&gt;
 1 7951500    A       0.42 0.547
 2 7951500    A      11.9  1.64 
 3 7951500    A      23.4  3.89 
 4 7951500    A      34.9  6.13 
-# ... with 39 more rows</code></pre>
+# … with 39 more rows</code></pre>
 <p>A dummy group ‘A’ is added by <code>cleanup_data()</code>, so that
 data are in a standardized format now.</p>
 </div>

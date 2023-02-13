@@ -59,8 +59,9 @@ nls_fit = function(data, dose = 100,
   # This has kept me busy for more than 11 years now, stumbling over
   # https://stat.ethz.ch/pipermail/r-help/2006-February/087295.html
   bid.nls = try(suppressWarnings(nlsList(
-    pdr ~ exp_beta(minute, 100, m, k, beta)|patient_id/group, data = data, 
-    start = start)), silent = TRUE)
+    pdr ~ breathtestcore::exp_beta(
+      minute, 100, m, k, beta)|patient_id/group, data = data, 
+    start = start)), silent = FALSE)
   # strip off group and patient_id, add deviance
   cf = coef(bid.nls)
   if (!is.data.frame(cf)) {
@@ -116,13 +117,9 @@ nls_fit = function(data, dose = 100,
       )
     )
   }
-  cf = purrr::map_df(pars, rbind )  
-  cf = cf %>% filter(value != 0) 
-  # Gives warning  with testthat 3.0
-  # The `validate` argument of `as_tibble()` is deprecated as of tibble 2.0.0.
-  # Please use the `.name_repair` argument instead.
-  cf = cf %>% 
-    tibble::as_tibble(cf, .name_repair = "minimal")
+  cf = purrr::map_df(pars, rbind )  %>% 
+    filter(value != 0) %>% 
+    tibble::as_tibble(.name_repair = "minimal")
   
   ret = list(coef = cf, data = data, nls_fit = bid.nls)
   class(ret) = c("breathtestnlsfit", "breathtestfit" )
