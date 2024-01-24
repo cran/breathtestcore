@@ -1,6 +1,6 @@
 Package: breathtestcore
 Title: Core Functions to Read and Fit 13c Time Series from Breath Tests
-Version: 0.8.6
+Version: 0.8.7
 Authors@R: 
     c(person(given = "Dieter",
              family = "Menne",
@@ -41,9 +41,9 @@ Encoding: UTF-8
 SystemRequirements: pandoc
 Config/testthat/edition: 3
 Config/testthat/parallel: true
-RoxygenNote: 7.2.3
+RoxygenNote: 7.3.1
 NeedsCompilation: no
-Packaged: 2023-02-13 08:04:18 UTC; Dieter
+Packaged: 2024-01-24 11:44:40 UTC; Dieter
 Author: Dieter Menne [aut, cre],
   Menne Biomed Consulting Tuebingen [cph],
   Benjamin Misselwitz [fnd],
@@ -52,4 +52,4 @@ Author: Dieter Menne [aut, cre],
   University Hospital of Zurich, Dep. Gastroenterology [fnd, dtc]
 Maintainer: Dieter Menne <dieter.menne@menne-biomed.de>
 Repository: CRAN
-Date/Publication: 2023-02-13 14:00:07 UTC
+Date/Publication: 2024-01-24 15:02:47 UTC
