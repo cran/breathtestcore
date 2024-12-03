@@ -10,9 +10,9 @@ options(digits = 3)
 set.seed(4711)
 
 ## ----eval = FALSE-------------------------------------------------------------
-#  exp_beta = function(minute,dose,m,k,beta) {
-#       m*dose*k*beta*(1-exp(-k*minute))^(beta-1)*exp(-k*minute)
-#  }
+# exp_beta = function(minute,dose,m,k,beta) {
+#      m*dose*k*beta*(1-exp(-k*minute))^(beta-1)*exp(-k*minute)
+# }
 
 ## ----expb, fig.width = 6, echo = FALSE, fig.cap = "Examples of exponential beta functions used to fit breath test curves. _Bottom-up arrow_: Maes/Ghoos lag time. _Top-down arrow_: Maes/Ghoos half emptying time."----
 k = c(0.025, 0.015)
@@ -34,9 +34,9 @@ ggplot(g, aes(minute, pdr, color = as.character(beta))) +
   facet_grid(~paste("k=",k)) + 
   labs(color='beta') + 
   geom_segment(aes(x = t50, y = y_t50 + 5, xend = t50, yend = y_t50 + .3), 
-               data = gpar, size = 1, arrow = arrow_1 ) +
+               data = gpar, linewidth = 1, arrow = arrow_1 ) +
   geom_segment(aes(x = tlag, y = y_tlag-10, xend = tlag, yend = y_tlag - .3), 
-               data = gpar, size = 1, arrow = arrow_1) 
+               data = gpar, linewidth = 1, arrow = arrow_1) 
 
 ## ----t50, echo = FALSE, fig.cap = "The half-emptying time in the definition of Maes/Ghoos is the time where the area under curve (AUC) is half of the AUC under the curve extrapolated to infinity."----
 t50 = (gpar %>% filter(beta == 1.5 & k == 0.015 ))$t50
@@ -64,7 +64,7 @@ tibble(minute = seq(0, 300, by = 10)) %>%
 
 
 
-## ----fig.height = 2.5, fig.cap="The fitting methods available in package `breathtestshiny` and in the [online version](https://apps.menne-biomed.de/breathtestshiny/).", echo = FALSE----
+## ----fig.height = 2.5, fig.cap="The fitting methods available in package `breathtestshiny`", echo = FALSE----
 knitr::include_graphics("methods.png")
 
 ## ----foc, fig.width = 7, fig.asp = 0.4, echo = FALSE, fig.cap="Left: pharmcological PDR response of separated loads released in the smaller bowel after 0, 30 and 90 minutes. Right: sum response when all three loads are released successively."----
@@ -127,9 +127,9 @@ t50_pp = round(t50_powexp(tempt = tempt, beta = beta))
 p1 = flow %>% 
   ggplot(aes(minute, vol)) + geom_line() +
   ylab("vol in stomach (ml" ) + 
-  geom_segment(
-    aes(x = t50_pp+50, y = 250, xend = t50_pp, yend = 200),
-    size = 1, arrow = arrow_1 )
+  annotate(geom = "segment", 
+    x = t50_pp+50, y = 250, xend = t50_pp, yend = 200,
+    linewidth = 1, arrow = arrow_1 )
 
 p2 = flow %>% 
   ggplot(aes(minute, flow)) + geom_line() +
@@ -149,9 +149,9 @@ t50_pdr = (cv %>%
 p3 = cv %>% 
   ggplot(aes(minute, pdr)) + geom_line() +
   ylab("Expected PDF (not normalized)") +
-  geom_segment(
-    aes(x = t50_pdr, y = 45, xend = t50_pdr+50, yend = 40),
-    size = 1, arrow = arrow_1 )
+  annotate(geom = "segment",
+    x = t50_pdr, y = 45, xend = t50_pdr+50, yend = 40,
+    linewidth = 1, arrow = arrow_1 )
 
 gridExtra::grid.arrange(p1, p2, p3, ncol = 3, nrow = 1)
 
