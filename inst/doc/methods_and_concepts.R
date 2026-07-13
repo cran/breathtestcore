@@ -33,9 +33,9 @@ ggplot(g, aes(minute, pdr, color = as.character(beta))) +
   geom_line() + 
   facet_grid(~paste("k=",k)) + 
   labs(color='beta') + 
-  geom_segment(aes(x = t50, y = y_t50 + 5, xend = t50, yend = y_t50 + .3), 
+  geom_segment(aes(x = t50, y = y_t50 + 5, xend = t50, yend = y_t50 + 0.3), 
                data = gpar, linewidth = 1, arrow = arrow_1 ) +
-  geom_segment(aes(x = tlag, y = y_tlag-10, xend = tlag, yend = y_tlag - .3), 
+  geom_segment(aes(x = tlag, y = y_tlag-10, xend = tlag, yend = y_tlag - 0.3), 
                data = gpar, linewidth = 1, arrow = arrow_1) 
 
 ## ----t50, echo = FALSE, fig.cap = "The half-emptying time in the definition of Maes/Ghoos is the time where the area under curve (AUC) is half of the AUC under the curve extrapolated to infinity."----
